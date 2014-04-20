@@ -11,7 +11,7 @@ import javax.swing.JLabel;
  *
  * @author phucdk
  */
-public class Piece {
+public class DisplayPiece {
 
     private int player;
     private int number;
@@ -20,7 +20,7 @@ public class Piece {
     private int rowPosition;
     private int columnPosition;
 
-    public Piece(int player, int number, int rowPosition, int columnPosition, JLabel pieceLabel) {
+    public DisplayPiece(int player, int number, int rowPosition, int columnPosition, JLabel pieceLabel) {
         this.player = player;
         this.number = number;
         this.rowPosition = rowPosition;

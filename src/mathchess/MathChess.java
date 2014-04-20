@@ -46,8 +46,8 @@ public class MathChess extends JFrame implements MouseListener, MouseMotionListe
     private JLabel chessPiece;
     private int xAdjustment;
     private int yAdjustment;
-    private List<Piece> arrPiecePlayer1;
-    private List<Piece> arrPiecePlayer2;
+    private List<DisplayPiece> arrPiecePlayer1;
+    private List<DisplayPiece> arrPiecePlayer2;
     private int currentMovePlayer;
 
     public MathChess() {
@@ -121,103 +121,103 @@ public class MathChess extends JFrame implements MouseListener, MouseMotionListe
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/bb.png"));
         panel = (JPanel) chessBoard.getComponent(0);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 1, 0, 0, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 1, 0, 0, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/bc.png"));
         panel = (JPanel) chessBoard.getComponent(1);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 2, 0, 1, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 2, 0, 1, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/bd.png"));
         panel = (JPanel) chessBoard.getComponent(2);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 3, 0, 2, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 3, 0, 2, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/be.png"));
         panel = (JPanel) chessBoard.getComponent(3);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 4, 0, 3, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 4, 0, 3, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/bf.png"));
         panel = (JPanel) chessBoard.getComponent(4);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 5, 0, 4, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 5, 0, 4, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/bg.png"));
         panel = (JPanel) chessBoard.getComponent(5);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 6, 0, 5, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 6, 0, 5, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/bh.png"));
         panel = (JPanel) chessBoard.getComponent(6);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 7, 0, 6, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 7, 0, 6, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/bi.png"));
         panel = (JPanel) chessBoard.getComponent(7);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 8, 0, 7, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 8, 0, 7, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/bj.png"));
         panel = (JPanel) chessBoard.getComponent(8);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 9, 0, 8, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 9, 0, 8, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/ba.png"));
         panel = (JPanel) chessBoard.getComponent(13);
         panel.add(pieceLabel);
-        arrPiecePlayer1.add(new Piece(Constants.PLAYER.PLAYER_1, 0, 1, 4, pieceLabel));
+        arrPiecePlayer1.add(new DisplayPiece(Constants.PLAYER.PLAYER_1, 0, 1, 4, pieceLabel));
 
         //Player 2
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/ra.png"));
         panel = (JPanel) chessBoard.getComponent(85);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 0, 9, 5, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 0, 9, 5, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/rj.png"));
         panel = (JPanel) chessBoard.getComponent(90);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 9, 10, 0, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 9, 10, 0, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/ri.png"));
         panel = (JPanel) chessBoard.getComponent(91);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 8, 10, 1, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 8, 10, 1, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/rh.png"));
         panel = (JPanel) chessBoard.getComponent(92);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 7, 10, 2, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 7, 10, 2, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/rg.png"));
         panel = (JPanel) chessBoard.getComponent(93);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 6, 10, 3, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 6, 10, 3, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/rf.png"));
         panel = (JPanel) chessBoard.getComponent(94);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 5, 10, 4, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 5, 10, 4, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/re.png"));
         panel = (JPanel) chessBoard.getComponent(95);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 4, 10, 5, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 4, 10, 5, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/rd.png"));
         panel = (JPanel) chessBoard.getComponent(96);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 3, 10, 6, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 3, 10, 6, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/rc.png"));
         panel = (JPanel) chessBoard.getComponent(97);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 2, 10, 7, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 2, 10, 7, pieceLabel));
 
         pieceLabel = new JLabel(new ImageIcon("/home/phucdk/MathChessImage/rb.png"));
         panel = (JPanel) chessBoard.getComponent(98);
         panel.add(pieceLabel);
-        arrPiecePlayer2.add(new Piece(Constants.PLAYER.PLAYER_2, 1, 10, 8, pieceLabel));
+        arrPiecePlayer2.add(new DisplayPiece(Constants.PLAYER.PLAYER_2, 1, 10, 8, pieceLabel));
 
     }
 
@@ -232,7 +232,7 @@ public class MathChess extends JFrame implements MouseListener, MouseMotionListe
         xAdjustment = parentLocation.x - e.getX();
         yAdjustment = parentLocation.y - e.getY();
         chessPiece = (JLabel) c;
-        Piece aPiece = getPieceByPieceLabel(chessPiece);
+        DisplayPiece aPiece = getPieceByPieceLabel(chessPiece);
         if (isCurrentPlayer(aPiece)) {
             chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
             chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
@@ -246,7 +246,7 @@ public class MathChess extends JFrame implements MouseListener, MouseMotionListe
         if (chessPiece == null) {
             return;
         }
-        Piece aPiece = getPieceByPieceLabel(chessPiece);
+        DisplayPiece aPiece = getPieceByPieceLabel(chessPiece);
         if (isCurrentPlayer(aPiece)) {
             chessPiece.setLocation(me.getX() + xAdjustment, me.getY() + yAdjustment);
         }
@@ -255,7 +255,7 @@ public class MathChess extends JFrame implements MouseListener, MouseMotionListe
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        Piece aPiece = getPieceByPieceLabel(chessPiece);
+        DisplayPiece aPiece = getPieceByPieceLabel(chessPiece);
         if (isCurrentPlayer(aPiece)) {
             if (chessPiece == null) {
                 return;
@@ -350,19 +350,19 @@ public class MathChess extends JFrame implements MouseListener, MouseMotionListe
         this.yAdjustment = yAdjustment;
     }
 
-    public List<Piece> getArrPiecePlayer1() {
+    public List<DisplayPiece> getArrPiecePlayer1() {
         return arrPiecePlayer1;
     }
 
-    public void setArrPiecePlayer1(List<Piece> arrPiecePlayer1) {
+    public void setArrPiecePlayer1(List<DisplayPiece> arrPiecePlayer1) {
         this.arrPiecePlayer1 = arrPiecePlayer1;
     }
 
-    public List<Piece> getArrPiecePlayer2() {
+    public List<DisplayPiece> getArrPiecePlayer2() {
         return arrPiecePlayer2;
     }
 
-    public void setArrPiecePlayer2(List<Piece> arrPiecePlayer2) {
+    public void setArrPiecePlayer2(List<DisplayPiece> arrPiecePlayer2) {
         this.arrPiecePlayer2 = arrPiecePlayer2;
     }
 
@@ -374,7 +374,7 @@ public class MathChess extends JFrame implements MouseListener, MouseMotionListe
         this.currentMovePlayer = currentMovePlayer;
     }
 
-    private Piece getPieceByPieceLabel(JLabel chessPiece) {
+    private DisplayPiece getPieceByPieceLabel(JLabel chessPiece) {
         for (int i = 0; i < arrPiecePlayer1.size(); i++) {
             if (arrPiecePlayer1.get(i).getPieceLabel().equals(chessPiece)) {
                 return arrPiecePlayer1.get(i);
@@ -387,7 +387,7 @@ public class MathChess extends JFrame implements MouseListener, MouseMotionListe
         return null;
     }
 
-    private boolean isCurrentPlayer(Piece aPiece) {
+    private boolean isCurrentPlayer(DisplayPiece aPiece) {
         if (aPiece != null) {
             return aPiece.getPlayer() == currentMovePlayer;
         } else {
@@ -408,7 +408,7 @@ public class MathChess extends JFrame implements MouseListener, MouseMotionListe
         if (chessPiece == null) {
             return;
         }
-        Piece aPiece = getPieceByPieceLabel(chessPiece);
+        DisplayPiece aPiece = getPieceByPieceLabel(chessPiece);
 //        if (isCurrentPlayer(aPiece)) {
 //            chessPiece.setLocation(me.getX() + xAdjustment, me.getY() + yAdjustment);
 //        }
