@@ -6,7 +6,16 @@
 package mathchess;
 
 /**
- *
+ * farthest cell on 8 direction (MoveBorder)
+ * <br /> go up
+ * <br /> go down
+ * <br /> go left
+ * <br /> go right
+ * <br /> go cross up left
+ * <br /> go cross up right
+ * <br /> go cross down left
+ * <br /> go cross down right
+ * 
  * @author phucdk
  */
 public class MoveBorder {
