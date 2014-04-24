@@ -26,9 +26,42 @@ public class Evaluator {
      * @return
      */
     private int evalueTableValue(int[][] chessTable, int player) {
-        int value = 0;
+        int value;
         int valueByCountPiece = evaluateByCountPiece(chessTable, player);
-        value = 1 * valueByCountPiece;
+        int valueByCellControl = evaluateByCellControl(chessTable, player);
+        value = 1 * valueByCountPiece + 2 * valueByCellControl;
+        return value;
+    }
+
+    /**
+     *
+     * Evaluate table value by count can capture cell
+     * <br/> for each can capture cell of current player
+     * <br/> + 1 point
+     * <br/> for each can capture cell of opponent
+     * <br/> - 1 point
+     *
+     * @param chessTable
+     * @param player
+     * @return
+     */
+    private int evaluateByCellControl(int[][] chessTable, int player) {
+        int value = 0;
+        int countCanCaptureCell;
+        for (int i = 0; i < chessTable.length; i++) {
+            for (int j = 0; j < chessTable[i].length; j++) {
+                LogicPiece cannonPiece = new LogicPiece();
+                cannonPiece.setCurrentCell(new TableCell(i, j));
+                cannonPiece.setIsCaptured(false);
+                cannonPiece.setNumber(chessTable[i][j]);
+                countCanCaptureCell = countCanCaptureCellByCannonPiece(cannonPiece, chessTable, player);
+                if (isMyPiece(chessTable[i][j], player)) {
+                    value += countCanCaptureCell;
+                } else {
+                    value -= countCanCaptureCell;
+                }
+            }
+        }
         return value;
     }
 
@@ -36,15 +69,15 @@ public class Evaluator {
      *
      * Evaluate table value by addition all value of piece.
      *
-     * if the piece is current player piece piece 1: 1 point piece 2: 2 point
-     * ... piece 9: 9 point
-     *
-     * if the piece is opponent's piece piece 1: -1 point piece 2: -2 point ...
-     * piece 9: -9 point
+     * if the piece is current player's piece <br />- piece 1: 1 point <br />-
+     * piece 2: 2 point ... <br />- piece 9: 9 point
+     * <br />
+     * if the piece is opponent's piece <br />- piece 1: -1 point <br />- piece
+     * 2: -2 point ... <br />- piece 9: -9 point
      *
      *
      * @param chessTable
-     * @param player
+     * @param player current move player
      * @return
      */
     private int evaluateByCountPiece(int[][] chessTable, int player) {
@@ -302,6 +335,119 @@ public class Evaluator {
             arrcapture[i] = Integer.valueOf(listCaptureNumber.get(i).toString()).intValue();
         }
         return arrcapture;
+    }
+
+    /**
+     * count number of can capture cell by a given cannon piece
+     *
+     * @param cannonPiece
+     * @param chessTable
+     * @return
+     */
+    private int countCanCaptureCellByCannonPiece(LogicPiece cannonPiece, int[][] chessTable, int player) {
+        int numberOfcanCaptureCell = 0;
+        LogicPiece borePiece = new LogicPiece();
+        if (cannonPiece.getCurrentCell().getRow() > 0) {
+            int backwardChessPieceValue = chessTable[cannonPiece.getCurrentCell().getRow() - 1][cannonPiece.getCurrentCell().getColumn()];
+            if (backwardChessPieceValue > 0 && isMyPiece(backwardChessPieceValue, player)) {
+                if (cannonPiece.getCurrentCell().getRow() > 0) {
+                    borePiece.setNumber(backwardChessPieceValue % 10);
+                    borePiece.setCurrentCell(new TableCell(cannonPiece.getCurrentCell().getRow() - 1, cannonPiece.getCurrentCell().getColumn()));
+                    borePiece.setIsCaptured(false);
+                    borePiece.setPlayer(player);
+                    numberOfcanCaptureCell += getListCanCaputureCell(cannonPiece, borePiece, chessTable, true, player, CaptureType.VERTICAL_TO_TOP).size();
+                }
+            }
+            if (backwardChessPieceValue > 0 && isMyPiece(backwardChessPieceValue, player)) {
+                if (cannonPiece.getCurrentCell().getRow() > 0 && cannonPiece.getCurrentCell().getColumn() < 8) {
+                    borePiece.setNumber(backwardChessPieceValue % 10);
+                    borePiece.setCurrentCell(new TableCell(cannonPiece.getCurrentCell().getRow() - 1, cannonPiece.getCurrentCell().getColumn() + 1));
+                    borePiece.setIsCaptured(false);
+                    borePiece.setPlayer(player);
+                    numberOfcanCaptureCell += getListCanCaputureCell(cannonPiece, borePiece, chessTable, true, player, CaptureType.SUB_CROSS_TOP).size();
+                }
+            }
+            if (backwardChessPieceValue > 0 && isMyPiece(backwardChessPieceValue, player)) {
+                if (cannonPiece.getCurrentCell().getColumn() < 8) {
+                    borePiece.setNumber(backwardChessPieceValue % 10);
+                    borePiece.setCurrentCell(new TableCell(cannonPiece.getCurrentCell().getRow(), cannonPiece.getCurrentCell().getColumn() + 1));
+                    borePiece.setIsCaptured(false);
+                    borePiece.setPlayer(player);
+                    numberOfcanCaptureCell += getListCanCaputureCell(cannonPiece, borePiece, chessTable, true, player, CaptureType.HORIZON_TO_RIGHT).size();
+                }
+            }
+            if (backwardChessPieceValue > 0 && isMyPiece(backwardChessPieceValue, player)) {
+                if (cannonPiece.getCurrentCell().getRow() < 10 && cannonPiece.getCurrentCell().getColumn() < 8) {
+                    borePiece.setNumber(backwardChessPieceValue % 10);
+                    borePiece.setCurrentCell(new TableCell(cannonPiece.getCurrentCell().getRow() + 1, cannonPiece.getCurrentCell().getColumn() + 1));
+                    borePiece.setIsCaptured(false);
+                    borePiece.setPlayer(player);
+                    numberOfcanCaptureCell += getListCanCaputureCell(cannonPiece, borePiece, chessTable, true, player, CaptureType.MAIN_CROSS_DOWN).size();
+                }
+            }
+            if (backwardChessPieceValue > 0 && isMyPiece(backwardChessPieceValue, player)) {
+                if (cannonPiece.getCurrentCell().getRow() < 10) {
+                    borePiece.setNumber(backwardChessPieceValue % 10);
+                    borePiece.setCurrentCell(new TableCell(cannonPiece.getCurrentCell().getRow() + 1, cannonPiece.getCurrentCell().getColumn()));
+                    borePiece.setIsCaptured(false);
+                    borePiece.setPlayer(player);
+                    numberOfcanCaptureCell += getListCanCaputureCell(cannonPiece, borePiece, chessTable, true, player, CaptureType.VERTICAL_TO_DOWN).size();
+                }
+            }
+
+            if (backwardChessPieceValue > 0 && isMyPiece(backwardChessPieceValue, player)) {
+                if (cannonPiece.getCurrentCell().getRow() < 10 && cannonPiece.getCurrentCell().getColumn() > 0) {
+                    borePiece.setNumber(backwardChessPieceValue % 10);
+                    borePiece.setCurrentCell(new TableCell(cannonPiece.getCurrentCell().getRow() + 1, cannonPiece.getCurrentCell().getColumn() - 1));
+                    borePiece.setIsCaptured(false);
+                    borePiece.setPlayer(player);
+                    numberOfcanCaptureCell += getListCanCaputureCell(cannonPiece, borePiece, chessTable, true, player, CaptureType.SUB_CROSS_DOWN).size();
+                }
+            }
+            if (backwardChessPieceValue > 0 && isMyPiece(backwardChessPieceValue, player)) {
+                if (cannonPiece.getCurrentCell().getColumn() > 0) {
+                    borePiece.setNumber(backwardChessPieceValue % 10);
+                    borePiece.setCurrentCell(new TableCell(cannonPiece.getCurrentCell().getRow(), cannonPiece.getCurrentCell().getColumn() - 1));
+                    borePiece.setIsCaptured(false);
+                    borePiece.setPlayer(player);
+                    numberOfcanCaptureCell += getListCanCaputureCell(cannonPiece, borePiece, chessTable, true, player, CaptureType.HORIZON_TO_LEFT).size();
+                }
+            }
+
+            if (backwardChessPieceValue > 0 && isMyPiece(backwardChessPieceValue, player)) {
+                if (cannonPiece.getCurrentCell().getRow() > 0 && cannonPiece.getCurrentCell().getColumn() > 0) {
+                    borePiece.setNumber(backwardChessPieceValue % 10);
+                    borePiece.setCurrentCell(new TableCell(cannonPiece.getCurrentCell().getRow() - 1, cannonPiece.getCurrentCell().getColumn() - 1));
+                    borePiece.setIsCaptured(false);
+                    borePiece.setPlayer(player);
+                    numberOfcanCaptureCell += getListCanCaputureCell(cannonPiece, borePiece, chessTable, true, player, CaptureType.MAIN_CROSS_TOP).size();
+                }
+            }
+        }
+        return numberOfcanCaptureCell;
+    }
+
+    private boolean isMyPiece(int pieceValue, int player) {
+        if (Constants.PLAYER.PLAYER_1 == player) {
+            if (pieceValue >= 0 && pieceValue <= 9) {
+                return true;
+            }
+        }
+
+        if (Constants.PLAYER.PLAYER_2 == player) {
+            if (pieceValue >= 10 && pieceValue <= 19) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isPiece(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private boolean canMove(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
