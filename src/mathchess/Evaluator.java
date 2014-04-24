@@ -7,6 +7,7 @@ package mathchess;
 
 import java.util.ArrayList;
 import java.util.List;
+import mathchess.common.Constants;
 import mathchess.common.MathChessUtils;
 
 /**
@@ -24,15 +25,73 @@ public class Evaluator {
      * @param chessTable
      * @return
      */
-    private int evalueTableValue(int[][] chessTable) {
+    private int evalueTableValue(int[][] chessTable, int player) {
         int value = 0;
-
+        int valueByCountPiece = evaluateByCountPiece(chessTable, player);
+        value = 1 * valueByCountPiece;
         return value;
     }
 
-    private boolean canCapturePiece(LogicPiece cannonPiece, LogicPiece borePiece, TableCell cell) {
-        boolean canCapture = false;
+    /**
+     *
+     * Evaluate table value by addition all value of piece.
+     *
+     * if the piece is current player piece piece 1: 1 point piece 2: 2 point
+     * ... piece 9: 9 point
+     *
+     * if the piece is opponent's piece piece 1: -1 point piece 2: -2 point ...
+     * piece 9: -9 point
+     *
+     *
+     * @param chessTable
+     * @param player
+     * @return
+     */
+    private int evaluateByCountPiece(int[][] chessTable, int player) {
+        int value = 0;
+        for (int[] row : chessTable) {
+            for (int j = 0; j < row.length; j++) {
+                if (Constants.PLAYER.PLAYER_1 == player) {
+                    if (row[j] > 0) {
+                        if (row[j] <= 9) {
+                            value += row[j];
+                        }
+                        if (row[j] > 11) {
+                            value -= row[j] % 10;
+                        }
+                    }
+                } else if (Constants.PLAYER.PLAYER_2 == player) {
+                    if (row[j] > 0) {
+                        if (row[j] <= 9) {
+                            value -= row[j];
+                        }
+                        if (row[j] > 11) {
+                            value += row[j] % 10;
+                        }
+                    }
+                }
+            }
+        }
+        return value;
+    }
 
+    /**
+     *
+     * check if cannonPiece and borePiece pair can capture given cell
+     *
+     * @param cannonPiece
+     * @param borePiece
+     * @param cell
+     * @param chessTable
+     * @param player
+     * @return
+     */
+    private boolean canCapturePiece(LogicPiece cannonPiece, LogicPiece borePiece, TableCell cell, int[][] chessTable, int player) {
+        boolean canCapture = false;
+        List<TableCell> listCanCaptureCell = getListCanCaputureCell(cannonPiece, borePiece, chessTable, false, player, CaptureType.SUB_CROSS_TOP);
+        if (listCanCaptureCell.contains(cell)) {
+            canCapture = true;
+        }
         return canCapture;
     }
 
@@ -206,7 +265,7 @@ public class Evaluator {
      * @return
      */
     private int[] getCaptureNumber(int cannonNumber, int boreNumber) {
-        List<Integer> listCaptureNumber = new ArrayList<Integer>();
+        List<Integer> listCaptureNumber = new ArrayList<>();
         int captureNumber = (cannonNumber + boreNumber) % 10;
         if (captureNumber > 0) {
             if (!listCaptureNumber.contains(new Integer(captureNumber))) {
