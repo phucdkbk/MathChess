@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mathchess;
+package mathchess.common;
 
+import mathchess.chess.object.TableCell;
+import mathchess.chess.object.MoveBorder;
+import mathchess.chess.object.LogicPiece;
 import java.util.ArrayList;
 import java.util.List;
 import mathchess.common.Constants;

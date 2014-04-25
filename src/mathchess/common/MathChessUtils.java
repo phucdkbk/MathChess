@@ -5,8 +5,8 @@
  */
 package mathchess.common;
 
-import mathchess.MoveBorder;
-import mathchess.TableCell;
+import mathchess.chess.object.MoveBorder;
+import mathchess.chess.object.TableCell;
 
 /**
  *
@@ -55,7 +55,7 @@ public class MathChessUtils {
 
         currentRow = tableCell.getRow();
         currentColumn = tableCell.getColumn() + 1;
-        while (currentRow >= Constants.TABLE.MIN_ROW) {
+        while (currentColumn <= Constants.TABLE.MAX_COLUMN) {
             if (isPiece(chessTable[currentRow][currentColumn])) {
                 if (isMyPiece(chessTable[currentRow][currentColumn], player)) {
                     currentColumn--;
@@ -66,7 +66,7 @@ public class MathChessUtils {
             }
             currentColumn++;
         }
-        aMoveBorder.setTopCell(new TableCell(currentRow, currentColumn));
+        aMoveBorder.setRightCell(new TableCell(currentRow, currentColumn));
 
         currentRow = tableCell.getRow() + 1;
         currentColumn = tableCell.getColumn() + 1;
@@ -99,25 +99,25 @@ public class MathChessUtils {
         }
         aMoveBorder.setBottomCell(new TableCell(currentRow, currentColumn));
 
-        currentRow = tableCell.getRow() - 1;
-        currentColumn = tableCell.getColumn() + 1;
-        while (currentRow >= Constants.TABLE.MIN_ROW && currentColumn <= Constants.TABLE.MAX_COLUMN) {
+        currentRow = tableCell.getRow() + 1;
+        currentColumn = tableCell.getColumn() - 1;
+        while (currentRow <= Constants.TABLE.MAX_ROW && currentColumn >= Constants.TABLE.MIN_COLUMN) {
             if (isPiece(chessTable[currentRow][currentColumn])) {
                 if (isMyPiece(chessTable[currentRow][currentColumn], player)) {
-                    currentRow++;
-                    currentColumn--;
+                    currentRow--;
+                    currentColumn++;
                     break;
                 } else {
                     break;
                 }
             }
-            currentRow--;
-            currentColumn++;
+            currentRow++;
+            currentColumn--;
         }
         aMoveBorder.setBottomLeftCell(new TableCell(currentRow, currentColumn));
 
         currentColumn = tableCell.getColumn() - 1;
-        while (currentRow >= Constants.TABLE.MIN_ROW) {
+        while (currentColumn >= Constants.TABLE.MIN_COLUMN) {
             if (isPiece(chessTable[currentRow][currentColumn])) {
                 if (isMyPiece(chessTable[currentRow][currentColumn], player)) {
                     currentColumn++;
@@ -132,7 +132,7 @@ public class MathChessUtils {
 
         currentRow = tableCell.getRow() - 1;
         currentColumn = tableCell.getColumn() - 1;
-        while (currentRow >= Constants.TABLE.MIN_ROW) {
+        while (currentRow >= Constants.TABLE.MIN_ROW && currentColumn >= Constants.TABLE.MIN_COLUMN) {
             if (isPiece(chessTable[currentRow][currentColumn])) {
                 if (isMyPiece(chessTable[currentRow][currentColumn], player)) {
                     currentRow++;
