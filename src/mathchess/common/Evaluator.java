@@ -28,7 +28,7 @@ public class Evaluator {
      * @param chessTable
      * @return
      */
-    private int evalueTableValue(int[][] chessTable, int player) {
+    public static int evalueTableValue(int[][] chessTable, int player) {
         int value;
         int valueByCountPiece = evaluateByCountPiece(chessTable, player);
         int valueByCellControl = evaluateByCellControl(chessTable, player);
@@ -48,7 +48,7 @@ public class Evaluator {
      * @param player
      * @return
      */
-    private int evaluateByCellControl(int[][] chessTable, int player) {
+    private static int evaluateByCellControl(int[][] chessTable, int player) {
         int value = 0;
         int countCanCaptureCell;
         for (int i = 0; i < chessTable.length; i++) {
@@ -83,7 +83,7 @@ public class Evaluator {
      * @param player current move player
      * @return
      */
-    private int evaluateByCountPiece(int[][] chessTable, int player) {
+    private static int evaluateByCountPiece(int[][] chessTable, int player) {
         int value = 0;
         for (int[] row : chessTable) {
             for (int j = 0; j < row.length; j++) {

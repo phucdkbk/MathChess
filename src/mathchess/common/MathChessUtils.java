@@ -5,6 +5,7 @@
  */
 package mathchess.common;
 
+import java.util.List;
 import mathchess.chess.object.MoveBorder;
 import mathchess.chess.object.TableCell;
 
@@ -191,5 +192,9 @@ public class MathChessUtils {
             }
         }
         return false;
+    }
+
+    public static List<int[][]> getListChildTableStatus(int[][] chessTable, int player) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
