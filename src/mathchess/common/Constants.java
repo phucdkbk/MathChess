@@ -26,4 +26,9 @@ public interface Constants {
         public static final int MIN_COLUMN = 0;
         public static final int MAX_COLUMN = 8;
     }
+    
+    public interface PIECE {
+        public static final int EMPTY_PIECE = -1;
+    }
+    
 }

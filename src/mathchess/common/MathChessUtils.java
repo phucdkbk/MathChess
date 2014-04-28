@@ -5,9 +5,14 @@
  */
 package mathchess.common;
 
+import java.util.ArrayList;
 import java.util.List;
+import mathchess.algorithm.SearchResult;
 import mathchess.chess.object.MoveBorder;
+import mathchess.chess.object.MovePiece;
 import mathchess.chess.object.TableCell;
+import mathchess.display.DisplayPiece;
+import mathchess.display.MathChess;
 
 /**
  *
@@ -194,7 +199,187 @@ public class MathChessUtils {
         return false;
     }
 
-    public static List<int[][]> getListChildTableStatus(int[][] chessTable, int player) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     *
+     * List all child chess table status of given chessTable and current move
+     * player
+     *
+     * @param chessTable
+     * @param currentMovePlayer
+     * @return
+     */
+    public static List<int[][]> getListChildTableStatus(int[][] chessTable, int currentMovePlayer) {
+        List<int[][]> listChildChessTables = new ArrayList<>();
+        List<MovePiece> listMovePieces = getListMovePiece(chessTable, currentMovePlayer);
+        for (int i = 0; i < listMovePieces.size(); i++) {
+            int[][] tmpChessTable = getChessTableByMove(chessTable, listMovePieces.get(i));
+            listChildChessTables.add(tmpChessTable);
+        }
+        return listChildChessTables;
     }
+
+    /**
+     *
+     * get list move piece from current chess table with given current move
+     * player
+     *
+     * @param chessTable
+     * @param currentMovePlayer
+     * @return
+     */
+    public static List<MovePiece> getListMovePiece(int[][] chessTable, int currentMovePlayer) {
+        List<MovePiece> listMovePieces = new ArrayList<>();
+        int currentRow;
+        int currentColumn;
+        for (int row = 0; row < chessTable.length; row++) {
+            for (int column = 0; column < chessTable[row].length; column++) {
+                currentRow = row;
+                currentColumn = column;
+                if (isMyPiece(chessTable[row][column], currentMovePlayer)) {
+                    while (currentRow >= Constants.TABLE.MIN_ROW) {
+                        currentRow--;
+                        if (isPiece(chessTable[currentRow][currentColumn])) {
+                            break;
+                        }
+                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+                    }
+
+                    currentRow = row;
+                    currentColumn = column;
+                    while (currentRow >= Constants.TABLE.MIN_ROW && currentColumn <= Constants.TABLE.MAX_COLUMN) {
+                        currentRow--;
+                        currentColumn++;
+                        if (isPiece(chessTable[currentRow][currentColumn])) {
+                            break;
+                        }
+                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+                    }
+
+                    currentRow = row;
+                    currentColumn = column;
+                    while (currentColumn <= Constants.TABLE.MAX_COLUMN) {
+                        currentColumn++;
+                        if (isPiece(chessTable[currentRow][currentColumn])) {
+                            break;
+                        }
+                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+                    }
+
+                    currentRow = row;
+                    currentColumn = column;
+                    while (currentRow <= Constants.TABLE.MAX_ROW && currentColumn <= Constants.TABLE.MAX_COLUMN) {
+                        currentRow++;
+                        currentColumn++;
+                        if (isPiece(chessTable[currentRow][currentColumn])) {
+                            break;
+                        }
+                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+                    }
+
+                    currentRow = row;
+                    currentColumn = column;
+                    while (currentRow <= Constants.TABLE.MAX_ROW) {
+                        currentRow++;
+                        if (isPiece(chessTable[currentRow][currentColumn])) {
+                            break;
+                        }
+                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+                    }
+
+                    currentRow = row;
+                    currentColumn = column;
+                    while (currentRow <= Constants.TABLE.MAX_ROW && currentColumn >= Constants.TABLE.MIN_COLUMN) {
+                        currentRow++;
+                        currentColumn--;
+                        if (isPiece(chessTable[currentRow][currentColumn])) {
+                            break;
+                        }
+                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+                    }
+
+                    currentRow = row;
+                    currentColumn = column;
+                    while (currentColumn >= Constants.TABLE.MIN_COLUMN) {
+                        currentColumn--;
+                        if (isPiece(chessTable[currentRow][currentColumn])) {
+                            break;
+                        }
+                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+                    }
+
+                    currentRow = row;
+                    currentColumn = column;
+                    while (currentRow >= Constants.TABLE.MIN_ROW && currentColumn >= Constants.TABLE.MIN_COLUMN) {
+                        currentRow--;
+                        currentColumn--;
+                        if (isPiece(chessTable[currentRow][currentColumn])) {
+                            break;
+                        }
+                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+                    }
+                }
+            }
+        }
+        return listMovePieces;
+    }
+
+    /**
+     *
+     * @param chessTable
+     * @param movePiece
+     * @return
+     */
+    private static int[][] getChessTableByMove(int[][] chessTable, MovePiece movePiece) {
+        int[][] tmpChessTable = chessTable.clone();
+        tmpChessTable[movePiece.getToCell().getRow()][movePiece.getToCell().getColumn()] = tmpChessTable[movePiece.getFromCell().getRow()][movePiece.getFromCell().getColumn()];
+        tmpChessTable[movePiece.getFromCell().getRow()][movePiece.getFromCell().getColumn()] = Constants.PIECE.EMPTY_PIECE;
+        return tmpChessTable;
+    }
+
+    /**
+     *
+     * convert from display math chess to logic math chess table
+     *
+     * @param displayChessTable
+     * @return
+     */
+    public static int[][] convertFromDisplayToLogic(MathChess displayChessTable) {
+        int[][] chessTable = new int[9][11];
+        for (int[] row : chessTable) {
+            for (int j = 0; j < row.length; j++) {
+                row[j] = Constants.PIECE.EMPTY_PIECE;
+            }
+        }
+        for (int i = 0; i < displayChessTable.getListDisplayPiece().size(); i++) {
+            DisplayPiece displayPiece = displayChessTable.getListDisplayPiece().get(i);
+            if (!displayPiece.isIsCaptured()) {
+                chessTable[displayPiece.getRowPosition()][displayPiece.getColumnPosition()] = displayPiece.getNumber() + 10 * displayPiece.getNumber();
+            }
+        }
+        return chessTable;
+    }
+
+    /**
+     * 
+     * calculate move piece from algorithm search result and current table status
+     * 
+     * @param searchResult
+     * @param chessTable 
+     */
+    public static void calculateMovePiece(SearchResult searchResult, int[][] chessTable) {
+        MovePiece movePiece = new MovePiece();
+        for (int i = 0; i < chessTable.length; i++) {
+            for (int j = 0; j < chessTable[i].length; j++) {
+                if (searchResult.getChessTable()[i][j] == chessTable[i][j]) {
+                    if (chessTable[i][j] == Constants.PIECE.EMPTY_PIECE) {
+                        movePiece.setFromCell(new TableCell(i, j));
+                    } else {
+                        movePiece.setToCell(new TableCell(i, j));
+                    }
+                }
+            }
+        }
+        searchResult.setMovePiece(movePiece);
+    }
+
 }

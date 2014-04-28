@@ -5,6 +5,8 @@
  */
 package mathchess.algorithm;
 
+import mathchess.chess.object.MovePiece;
+
 /**
  *
  * @author phucdk
@@ -13,6 +15,7 @@ public class SearchResult {
 
     private int[][] chessTable;
     private int value;
+    private MovePiece movePiece;
 
     public int[][] getChessTable() {
         return chessTable;
@@ -28,6 +31,14 @@ public class SearchResult {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public MovePiece getMovePiece() {
+        return movePiece;
+    }
+
+    public void setMovePiece(MovePiece movePiece) {
+        this.movePiece = movePiece;
     }
 
 }

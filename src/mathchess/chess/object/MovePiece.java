@@ -29,6 +29,13 @@ public class MovePiece {
     public void setToCell(TableCell toCell) {
         this.toCell = toCell;
     }
-    
-    
+
+    public MovePiece() {
+    }
+
+    public MovePiece(TableCell fromCell, TableCell toCell) {
+        this.fromCell = fromCell;
+        this.toCell = toCell;
+    }
+
 }

@@ -10,8 +10,6 @@ import mathchess.chess.object.MoveBorder;
 import mathchess.chess.object.LogicPiece;
 import java.util.ArrayList;
 import java.util.List;
-import mathchess.common.Constants;
-import mathchess.common.MathChessUtils;
 
 /**
  *
@@ -26,6 +24,7 @@ public class Evaluator {
      * of player 2: from 10 to 19, where 10 is the player 2's 0 piece
      *
      * @param chessTable
+     * @param player
      * @return
      */
     public static int evalueTableValue(int[][] chessTable, int player) {
@@ -141,7 +140,7 @@ public class Evaluator {
      *
      * @return
      */
-    private List<TableCell> getListCanCaputureCell(LogicPiece cannonPiece, LogicPiece borePiece, int[][] chessTable, boolean isGetAllCell, int player, CaptureType captureType) {
+    private static List<TableCell> getListCanCaputureCell(LogicPiece cannonPiece, LogicPiece borePiece, int[][] chessTable, boolean isGetAllCell, int player, CaptureType captureType) {
         List<TableCell> listTableCells = new ArrayList<>();
         int[] arrCaptureNumber = getCaptureNumber(cannonPiece.getNumber(), borePiece.getNumber());
         int borePieceRow = borePiece.getCurrentCell().getRow();
@@ -300,7 +299,7 @@ public class Evaluator {
      * @param boreNumber
      * @return
      */
-    private int[] getCaptureNumber(int cannonNumber, int boreNumber) {
+    private static int[] getCaptureNumber(int cannonNumber, int boreNumber) {
         List<Integer> listCaptureNumber = new ArrayList<>();
         int captureNumber = (cannonNumber + boreNumber) % 10;
         if (captureNumber > 0) {
@@ -347,7 +346,7 @@ public class Evaluator {
      * @param chessTable
      * @return
      */
-    private int countCanCaptureCellByCannonPiece(LogicPiece cannonPiece, int[][] chessTable, int player) {
+    private static int countCanCaptureCellByCannonPiece(LogicPiece cannonPiece, int[][] chessTable, int player) {
         int numberOfcanCaptureCell = 0;
         LogicPiece borePiece = new LogicPiece();
         if (cannonPiece.getCurrentCell().getRow() > 0) {
