@@ -13,6 +13,7 @@ import mathchess.chess.object.MovePiece;
 import mathchess.chess.object.TableCell;
 import mathchess.display.DisplayPiece;
 import mathchess.display.MathChess;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,9 @@ import mathchess.display.MathChess;
  * @author phucdk
  */
 public class MathChessUtils {
+
+    private static final Logger logger = Logger.getLogger(MathChessUtils.class);
+    public static int countEvaluaionTime = 0;
 
     public static MoveBorder getMoveBorder(int[][] chessTable, int player, TableCell tableCell) {
         MoveBorder aMoveBorder = new MoveBorder();
@@ -229,96 +233,100 @@ public class MathChessUtils {
      */
     public static List<MovePiece> getListMovePiece(int[][] chessTable, int currentMovePlayer) {
         List<MovePiece> listMovePieces = new ArrayList<>();
-        int currentRow;
-        int currentColumn;
-        for (int row = 0; row < chessTable.length; row++) {
-            for (int column = 0; column < chessTable[row].length; column++) {
-                currentRow = row;
-                currentColumn = column;
-                if (isMyPiece(chessTable[row][column], currentMovePlayer)) {
-                    while (currentRow >= Constants.TABLE.MIN_ROW) {
-                        currentRow--;
-                        if (isPiece(chessTable[currentRow][currentColumn])) {
-                            break;
-                        }
-                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
-                    }
-
+        int currentRow = -1;
+        int currentColumn = -1;
+        try {
+            for (int row = 0; row < chessTable.length; row++) {
+                for (int column = 0; column < chessTable[row].length; column++) {
                     currentRow = row;
                     currentColumn = column;
-                    while (currentRow >= Constants.TABLE.MIN_ROW && currentColumn <= Constants.TABLE.MAX_COLUMN) {
-                        currentRow--;
-                        currentColumn++;
-                        if (isPiece(chessTable[currentRow][currentColumn])) {
-                            break;
+                    if (isMyPiece(chessTable[row][column], currentMovePlayer)) {
+                        while (currentRow > Constants.TABLE.MIN_ROW) {
+                            currentRow--;
+                            if (isPiece(chessTable[currentRow][currentColumn])) {
+                                break;
+                            }
+                            listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
                         }
-                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
-                    }
 
-                    currentRow = row;
-                    currentColumn = column;
-                    while (currentColumn <= Constants.TABLE.MAX_COLUMN) {
-                        currentColumn++;
-                        if (isPiece(chessTable[currentRow][currentColumn])) {
-                            break;
+                        currentRow = row;
+                        currentColumn = column;
+                        while (currentRow > Constants.TABLE.MIN_ROW && currentColumn < Constants.TABLE.MAX_COLUMN) {
+                            currentRow--;
+                            currentColumn++;
+                            if (isPiece(chessTable[currentRow][currentColumn])) {
+                                break;
+                            }
+                            listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
                         }
-                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
-                    }
 
-                    currentRow = row;
-                    currentColumn = column;
-                    while (currentRow <= Constants.TABLE.MAX_ROW && currentColumn <= Constants.TABLE.MAX_COLUMN) {
-                        currentRow++;
-                        currentColumn++;
-                        if (isPiece(chessTable[currentRow][currentColumn])) {
-                            break;
+                        currentRow = row;
+                        currentColumn = column;
+                        while (currentColumn < Constants.TABLE.MAX_COLUMN) {
+                            currentColumn++;
+                            if (isPiece(chessTable[currentRow][currentColumn])) {
+                                break;
+                            }
+                            listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
                         }
-                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
-                    }
 
-                    currentRow = row;
-                    currentColumn = column;
-                    while (currentRow <= Constants.TABLE.MAX_ROW) {
-                        currentRow++;
-                        if (isPiece(chessTable[currentRow][currentColumn])) {
-                            break;
+                        currentRow = row;
+                        currentColumn = column;
+                        while (currentRow < Constants.TABLE.MAX_ROW && currentColumn < Constants.TABLE.MAX_COLUMN) {
+                            currentRow++;
+                            currentColumn++;
+                            if (isPiece(chessTable[currentRow][currentColumn])) {
+                                break;
+                            }
+                            listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
                         }
-                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
-                    }
 
-                    currentRow = row;
-                    currentColumn = column;
-                    while (currentRow <= Constants.TABLE.MAX_ROW && currentColumn >= Constants.TABLE.MIN_COLUMN) {
-                        currentRow++;
-                        currentColumn--;
-                        if (isPiece(chessTable[currentRow][currentColumn])) {
-                            break;
+                        currentRow = row;
+                        currentColumn = column;
+                        while (currentRow < Constants.TABLE.MAX_ROW) {
+                            currentRow++;
+                            if (isPiece(chessTable[currentRow][currentColumn])) {
+                                break;
+                            }
+                            listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
                         }
-                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
-                    }
 
-                    currentRow = row;
-                    currentColumn = column;
-                    while (currentColumn >= Constants.TABLE.MIN_COLUMN) {
-                        currentColumn--;
-                        if (isPiece(chessTable[currentRow][currentColumn])) {
-                            break;
+                        currentRow = row;
+                        currentColumn = column;
+                        while (currentRow < Constants.TABLE.MAX_ROW && currentColumn > Constants.TABLE.MIN_COLUMN) {
+                            currentRow++;
+                            currentColumn--;
+                            if (isPiece(chessTable[currentRow][currentColumn])) {
+                                break;
+                            }
+                            listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
                         }
-                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
-                    }
 
-                    currentRow = row;
-                    currentColumn = column;
-                    while (currentRow >= Constants.TABLE.MIN_ROW && currentColumn >= Constants.TABLE.MIN_COLUMN) {
-                        currentRow--;
-                        currentColumn--;
-                        if (isPiece(chessTable[currentRow][currentColumn])) {
-                            break;
+                        currentRow = row;
+                        currentColumn = column;
+                        while (currentColumn > Constants.TABLE.MIN_COLUMN) {
+                            currentColumn--;
+                            if (isPiece(chessTable[currentRow][currentColumn])) {
+                                break;
+                            }
+                            listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
                         }
-                        listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+
+                        currentRow = row;
+                        currentColumn = column;
+                        while (currentRow > Constants.TABLE.MIN_ROW && currentColumn > Constants.TABLE.MIN_COLUMN) {
+                            currentRow--;
+                            currentColumn--;
+                            if (isPiece(chessTable[currentRow][currentColumn])) {
+                                break;
+                            }
+                            listMovePieces.add(new MovePiece(new TableCell(row, column), new TableCell(currentRow, currentColumn)));
+                        }
                     }
                 }
             }
+        } catch (Exception ex) {
+            logger.error(" " + currentRow + "_" + currentColumn, ex);
         }
         return listMovePieces;
     }
@@ -360,11 +368,12 @@ public class MathChessUtils {
     }
 
     /**
-     * 
-     * calculate move piece from algorithm search result and current table status
-     * 
+     *
+     * calculate move piece from algorithm search result and current table
+     * status
+     *
      * @param searchResult
-     * @param chessTable 
+     * @param chessTable
      */
     public static void calculateMovePiece(SearchResult searchResult, int[][] chessTable) {
         MovePiece movePiece = new MovePiece();
@@ -380,6 +389,21 @@ public class MathChessUtils {
             }
         }
         searchResult.setMovePiece(movePiece);
+    }
+
+    /**
+     * 
+     * print chess table status to console for debugging
+     * 
+     * @param chessTable 
+     */
+    public static void printTableStatus(int[][] chessTable) {
+        for (int[] row : chessTable) {
+            for (int i = 0; i < row.length; i++) {
+                System.out.print(row[i] + " ");
+            }
+            System.out.println("");
+        }
     }
 
 }

@@ -32,6 +32,7 @@ public class Evaluator {
         int valueByCountPiece = evaluateByCountPiece(chessTable, player);
         int valueByCellControl = evaluateByCellControl(chessTable, player);
         value = 1 * valueByCountPiece + 2 * valueByCellControl;
+        MathChessUtils.countEvaluaionTime++;
         return value;
     }
 
@@ -427,7 +428,7 @@ public class Evaluator {
             }
         }
         return numberOfcanCaptureCell;
-    }   
+    }
 
     /**
      * main cross: from top left - bottom right sub cross: from top right -

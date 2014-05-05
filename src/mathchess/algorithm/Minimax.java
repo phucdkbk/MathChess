@@ -38,13 +38,13 @@ public class Minimax {
                 }
             } else {
                 List<int[][]> listChildTableStatus = MathChessUtils.getListChildTableStatus(chessTable, Constants.PLAYER.PLAYER_2);
-                value = -100000000;
+                value = 100000000;
                 for (int[][] childChessTable : listChildTableStatus) {
                     SearchResult tmpSearchResult = minimaxSearch(childChessTable, player, length - 1);
                     if (tmpSearchResult.getValue() < value) {
                         value = tmpSearchResult.getValue();
                         searchResult.setChessTable(childChessTable);
-                        searchResult.setValue(tmpSearchResult.getValue());
+                        searchResult.setValue(tmpSearchResult.getValue());                        
                     }
                 }
             }
